@@ -7,5 +7,11 @@ from rest_framework.response import Response
 # Create your views here.
 
 @api_view(['GET'])
-def index(request):
-    return Response({'message': 'Hello, World!'})
+def product(request):
+    return Response('ok')
+
+@api_view(['GET'])
+def product_list(request,id):
+    return Response({
+        "id": id,
+    })
