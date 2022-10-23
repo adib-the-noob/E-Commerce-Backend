@@ -20,6 +20,12 @@ def product_details(request,id):
 
 @api_view(['GET'])
 def product_list(request):
-    product = Product.objects.all()
-    serializer = ProductSerializer(product, many=True)
+    product = Product.objects\
+        .select_related('collection')\
+        .all()
+    serializer = ProductSerializer(product, many=True,context={'request':request})
     return Response(serializer.data)
+
+@api_view(['GET'])
+def collection_details(request,pk):
+    return Response('ok')
