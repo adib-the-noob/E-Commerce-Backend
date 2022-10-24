@@ -1,6 +1,7 @@
+from pyexpat import model
 from rest_framework import serializers
 from decimal import Decimal
-from store.models import Product,Collection
+from store.models import Product,Collection, Review
 
 
 
@@ -36,3 +37,9 @@ class CollectionSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'products_count']
 
     products_count = serializers.IntegerField()
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['id','date','name','description','product']
