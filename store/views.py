@@ -9,17 +9,18 @@ from .serializers import CollectionSerializer, ProductSerializer,ReviewSerialize
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
 from .filters import ProductFilter
+from .pagination import DefaultPagination
 
 
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend,SearchFilter,OrderingFilter]
-    ordering_fields = ['name', 'price', 'created_at']
     filterset_class = ProductFilter
+    ordering_fields = ['name', 'price', 'created_at']
     search_fields = ['title', 'description']
     ordering_fields = ['unit_price','last_update']
-    pagination_class = PageNumberPagination
+    pagination_class = DefaultPagination
 
     def get_queryset(self):
         queryset = Product.objects.all()
