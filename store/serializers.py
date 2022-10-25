@@ -1,3 +1,4 @@
+from http import server
 from pyexpat import model
 from rest_framework import serializers
 from decimal import Decimal
@@ -16,6 +17,7 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['id','title','description','slug','inventory','unit_price','price_with_tax','collection']
     
+    unit_price = serializers.IntegerField()
     price_with_tax = serializers.SerializerMethodField(method_name='get_price_with_tax')
     # # serializer.PrimaryKeyRelatedField(queryset=Collection.objects.all()) will return the id of the collection
     # # collection = serializers.StringRelatedField()
