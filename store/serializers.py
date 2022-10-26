@@ -1,5 +1,3 @@
-from http import server
-from pyexpat import model
 from rest_framework import serializers
 from decimal import Decimal
 from store.models import Product,Collection, Review
@@ -50,3 +48,32 @@ class ReviewSerializer(serializers.ModelSerializer):
         product_id = self.context['product_id']
         review = Review.objects.create(product_id=product_id, **validated_data)
         return review
+
+
+class SimpleProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'title', 'unit_price']
+
+
+
+# class CartItemSerializer(serializers.ModelSerializer):
+#     product = SimpleProductSerializer()
+#     total_price = serializers.SerializerMethodField(method_name='get_total_price')
+
+#     def get_total_price(self, cart_item: CartItem):
+#         return sum([item.quantity * item.product.unit_price for item in CartItem.objects.filter(cart_id=cart_item.cart_id)])
+
+#     class Meta:
+#         model = CartItem
+#         fields = ['id','quantity','product']
+
+
+
+# class CartSerializer(serializers.ModelSerializer):
+#     id = serializers.UUIDField(read_only=True)
+#     items = CartItemSerializer(many=True, read_only=True)
+#     class Meta:
+#         model = Cart
+#         fields = ['id','items']
+

@@ -1,15 +1,15 @@
 from django.db.models.aggregates import Count
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet,GenericViewSet
 from rest_framework.filters import SearchFilter,OrderingFilter
 from rest_framework import status
 from .models import Collection, OrderItem, Product, Review
 from .serializers import CollectionSerializer, ProductSerializer,ReviewSerializer
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.pagination import PageNumberPagination
 from .filters import ProductFilter
 from .pagination import DefaultPagination
+from rest_framework import mixins
 
 
 class ProductViewSet(ModelViewSet):
@@ -63,12 +63,22 @@ class ReviewViewSet(ModelViewSet):
         return {'product_id': self.kwargs['product_pk']}
 
 
+# class CartViewSet(mixins.CreateModelMixin,
+#                 mixins.RetrieveModelMixin,
+#                 mixins.UpdateModelMixin,
+#                 mixins.DestroyModelMixin,GenericViewSet):
+
+#     queryset = Cart.objects.prefetch_related('items__product').all()
+#     serializer_class = CartSerializer
 
 
 
-
-
-
+# class CartItemViewSet(ModelViewSet):
+#     serializer_class = CartItemSerializer
+#     def get_queryset(self):
+#         return OrderItem.objects\
+#             .filter(cart_id=self.kwargs['cart_pk'])\
+#             .select_related('product')
 
 # @api_view(['GET','POST'])
 # def product_list(request):
